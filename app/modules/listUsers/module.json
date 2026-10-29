@@ -1,0 +1,1 @@
+{ "typeId": 9, "label": "List members of a presence channel", "description": "Lists the user IDs in a presence channel.", "connection": "hibira" }

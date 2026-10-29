@@ -1,0 +1,4 @@
+[
+  { "name": "channel", "type": "text", "label": "Presence channel", "required": true, "help": "A channel starting with presence-." },
+  { "name": "limit", "type": "uinteger", "label": "Limit", "default": 100 }
+]

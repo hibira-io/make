@@ -1,0 +1,1 @@
+{ "typeId": 4, "label": "Get a channel", "description": "Gets whether a channel is occupied, its subscriptions and, for presence channels, its members.", "connection": "hibira" }

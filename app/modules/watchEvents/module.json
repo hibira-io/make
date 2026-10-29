@@ -1,0 +1,1 @@
+{ "typeId": 10, "label": "Watch webhook events", "description": "Starts when a channel is occupied or vacated, a member joins or leaves a presence channel, or a client event is sent.", "connection": "hibira", "webhook": "events" }

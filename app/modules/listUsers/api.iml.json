@@ -1,0 +1,20 @@
+{
+  "temp": {
+    "ts": "{{formatDate(now, 'X')}}"
+  },
+  "url": "/apps/{{connection.appId}}/channels/{{parameters.channel}}/users",
+  "method": "GET",
+  "qs": {
+    "auth_key": "{{connection.key}}",
+    "auth_timestamp": "{{temp.ts}}",
+    "auth_version": "1.0",
+    "auth_signature": "{{sha256('GET\\n/apps/' + connection.appId + '/channels/' + parameters.channel + '/users\\nauth_key=' + connection.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0', 'hex', connection.secret)}}"
+  },
+  "response": {
+    "limit": "{{ifempty(parameters.limit, 100)}}",
+    "iterate": "{{body.users}}",
+    "output": {
+      "id": "{{item.id}}"
+    }
+  }
+}

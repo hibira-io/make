@@ -1,0 +1,17 @@
+{
+  "iterate": "{{body.events}}",
+  "output": {
+    "name": "{{item.name}}",
+    "channel": "{{item.channel}}",
+    "userId": "{{item.user_id}}",
+    "event": "{{item.event}}",
+    "data": "{{item.data}}",
+    "socketId": "{{item.socket_id}}",
+    "subscriptionCount": "{{item.subscription_count}}",
+    "timeMs": "{{body.time_ms}}"
+  },
+  "respond": {
+    "status": 200,
+    "body": { "ok": true }
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "name": "hibira-make",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Hibira custom app for Make",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "test": "node --test test/app.test.mjs",
+    "test:e2e": "node --test test/e2e.test.mjs",
+    "deploy": "node tools/deploy.mjs"
+  },
+  "devDependencies": {
+    "pusher-js": "^8.6.0"
+  }
+}
