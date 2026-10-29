@@ -32,9 +32,10 @@ member joining `presence-support` posts to Slack.
    ```
 
    `MAKE_ZONE` is the host of your Make URL (eu1, eu2, us1 or us2.make.com).
-   Make app names are unique: if `hibira` is taken, create the app in Make
-   (Custom apps > Create a new app) and pass its name as `MAKE_APP_NAME`.
-   Run it again without `--create` to upload changes.
+   Make app names are unique: if `hibira` is taken, pick another one, such
+   as `MAKE_APP_NAME=hibira-yourteam`, on this and every later run. Run it
+   again without `--create` to upload changes. It needs git and Node.js 18
+   or later.
 3. In a scenario, add a Hibira module and create a connection with your
    app ID and key from the [Hibira portal](https://hibira.io/portal)
    (your app > Overview > Credentials) and the secret, which is shown once
