@@ -13,6 +13,6 @@
     "type": "text",
     "label": "Data",
     "multiline": true,
-    "help": "Sent to every subscriber as is, usually JSON such as {\"id\": 42}. At most 10 KB (more on paid plans)."
+    "help": "Sent to every subscriber as is, usually JSON such as {\"id\": 42}. At most 4 KB on the free plan, 10 KB or more on paid plans."
   }
 ]

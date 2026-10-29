@@ -36,8 +36,9 @@ member joining `presence-support` posts to Slack.
    (Custom apps > Create a new app) and pass its name as `MAKE_APP_NAME`.
    Run it again without `--create` to upload changes.
 3. In a scenario, add a Hibira module and create a connection with your
-   app ID, key and secret from the [Hibira portal](https://hibira.io/portal)
-   (your app > App keys).
+   app ID and key from the [Hibira portal](https://hibira.io/portal)
+   (your app > Overview > Credentials) and the secret, which is shown once
+   when you create the app.
 
 For **Watch webhook events**, copy the webhook address Make shows into your
 app's Webhooks settings in the Hibira portal and pick the events to send.
