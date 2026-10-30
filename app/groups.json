@@ -1,0 +1,4 @@
+[
+  { "label": "Events", "modules": ["watchEvents", "triggerEvent"] },
+  { "label": "Channels", "modules": ["getChannel", "listChannels", "listUsers"] }
+]

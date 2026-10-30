@@ -1,0 +1,21 @@
+{
+  "temp": {
+    "ts": "{{formatDate(now, 'X')}}"
+  },
+  "url": "{{parameters.baseUrl}}/apps/{{parameters.appId}}/channels",
+  "method": "GET",
+  "qs": {
+    "auth_key": "{{parameters.key}}",
+    "auth_timestamp": "{{temp.ts}}",
+    "auth_version": "1.0",
+    "auth_signature": "{{sha256('GET\\n/apps/' + parameters.appId + '/channels\\nauth_key=' + parameters.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0', 'hex', parameters.secret)}}"
+  },
+  "response": {
+    "error": {
+      "message": "[{{statusCode}}] {{ifempty(body.error, 'Check the app ID, key and secret.')}}"
+    }
+  },
+  "log": {
+    "sanitize": ["request.qs.auth_signature"]
+  }
+}

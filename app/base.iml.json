@@ -1,0 +1,14 @@
+{
+  "baseUrl": "{{connection.baseUrl}}",
+  "headers": {
+    "User-Agent": "hibira-make/0.1.0"
+  },
+  "response": {
+    "error": {
+      "message": "[{{statusCode}}] {{ifempty(body.error, body)}}"
+    }
+  },
+  "log": {
+    "sanitize": ["request.qs.auth_signature"]
+  }
+}

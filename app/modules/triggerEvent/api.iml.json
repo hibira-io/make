@@ -1,0 +1,31 @@
+{
+  "temp": {
+    "ts": "{{formatDate(now, 'X')}}",
+    "payload": {
+      "name": "{{parameters.event}}",
+      "channels": "{{parameters.channels}}",
+      "data": "{{ifempty(parameters.data, '{}')}}"
+    }
+  },
+  "url": "/apps/{{connection.appId}}/events",
+  "method": "POST",
+  "type": "text",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{{createJSON(temp.payload)}}",
+  "qs": {
+    "auth_key": "{{connection.key}}",
+    "auth_timestamp": "{{temp.ts}}",
+    "auth_version": "1.0",
+    "body_md5": "{{md5(createJSON(temp.payload))}}",
+    "auth_signature": "{{sha256('POST\\n/apps/' + connection.appId + '/events\\nauth_key=' + connection.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0&body_md5=' + md5(createJSON(temp.payload)), 'hex', connection.secret)}}"
+  },
+  "response": {
+    "output": {
+      "channels": "{{parameters.channels}}",
+      "event": "{{parameters.event}}",
+      "sent": true
+    }
+  }
+}

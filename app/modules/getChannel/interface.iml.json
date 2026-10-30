@@ -1,0 +1,6 @@
+[
+  { "name": "name", "type": "text", "label": "Channel" },
+  { "name": "occupied", "type": "boolean", "label": "Occupied" },
+  { "name": "subscriptionCount", "type": "uinteger", "label": "Subscriptions" },
+  { "name": "userCount", "type": "uinteger", "label": "Members (presence channels)" }
+]

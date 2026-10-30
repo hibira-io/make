@@ -1,0 +1,1 @@
+{ "typeId": 9, "label": "List occupied channels", "description": "Lists the channels that have at least one subscriber.", "connection": "hibira" }

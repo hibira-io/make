@@ -1,0 +1,1 @@
+{ "channels": ["orders"], "event": "order-shipped", "sent": true }

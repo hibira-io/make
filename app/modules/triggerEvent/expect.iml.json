@@ -1,0 +1,18 @@
+[
+  {
+    "name": "channels",
+    "type": "array",
+    "label": "Channels",
+    "required": true,
+    "spec": { "type": "text", "label": "Channel" },
+    "help": "Up to 100 channels. Names use A-Z, a-z, 0-9 and _ - = @ , . ; such as orders, private-user-42 or presence-room-1."
+  },
+  { "name": "event", "type": "text", "label": "Event name", "required": true, "help": "Up to 200 characters, such as order-shipped. Names starting with pusher: or client- are reserved." },
+  {
+    "name": "data",
+    "type": "text",
+    "label": "Data",
+    "multiline": true,
+    "help": "Sent to every subscriber as is, usually JSON such as {\"id\": 42}. At most 4 KB on the free plan, 10 KB or more on paid plans."
+  }
+]

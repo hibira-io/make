@@ -1,0 +1,5 @@
+[
+  { "name": "channels", "type": "array", "label": "Channels", "spec": { "type": "text" } },
+  { "name": "event", "type": "text", "label": "Event name" },
+  { "name": "sent", "type": "boolean", "label": "Sent" }
+]

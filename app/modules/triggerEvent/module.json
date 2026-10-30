@@ -1,0 +1,1 @@
+{ "typeId": 4, "label": "Trigger an event", "description": "Sends an event to one or more channels.", "connection": "hibira" }

@@ -1,0 +1,4 @@
+[
+  { "name": "prefix", "type": "text", "label": "Name starts with", "help": "Such as presence-room-. With a presence- prefix, the member count of each channel is included." },
+  { "name": "limit", "type": "uinteger", "label": "Limit", "default": 100, "help": "The most channels to return." }
+]

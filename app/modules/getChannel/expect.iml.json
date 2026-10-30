@@ -1,0 +1,3 @@
+[
+  { "name": "channel", "type": "text", "label": "Channel", "required": true }
+]

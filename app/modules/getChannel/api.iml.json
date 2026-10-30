@@ -1,0 +1,23 @@
+{
+  "temp": {
+    "ts": "{{formatDate(now, 'X')}}",
+    "info": "{{if(indexOf(parameters.channel, 'presence-') == 0, 'subscription_count,user_count', 'subscription_count')}}"
+  },
+  "url": "/apps/{{connection.appId}}/channels/{{parameters.channel}}",
+  "method": "GET",
+  "qs": {
+    "auth_key": "{{connection.key}}",
+    "auth_timestamp": "{{temp.ts}}",
+    "auth_version": "1.0",
+    "info": "{{temp.info}}",
+    "auth_signature": "{{sha256('GET\\n/apps/' + connection.appId + '/channels/' + parameters.channel + '\\nauth_key=' + connection.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0&info=' + temp.info, 'hex', connection.secret)}}"
+  },
+  "response": {
+    "output": {
+      "name": "{{parameters.channel}}",
+      "occupied": "{{body.occupied}}",
+      "subscriptionCount": "{{body.subscription_count}}",
+      "userCount": "{{body.user_count}}"
+    }
+  }
+}

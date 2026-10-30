@@ -1,0 +1,13 @@
+[
+  { "name": "appId", "type": "text", "label": "App ID", "required": true, "help": "In the Hibira portal: your app > Overview > Credentials." },
+  { "name": "key", "type": "text", "label": "Key", "required": true },
+  { "name": "secret", "type": "password", "label": "Secret", "required": true, "help": "Shown once, when you create the app (or rotate the secret). Used to sign requests here; it is never sent." },
+  {
+    "name": "baseUrl",
+    "type": "url",
+    "label": "API URL",
+    "default": "https://ws.hibira.io",
+    "advanced": true,
+    "help": "https://ws.hibira.io for the default cluster. Change it only for another cluster or a self-hosted server."
+  }
+]

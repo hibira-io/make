@@ -1,0 +1,10 @@
+[
+  { "name": "name", "type": "text", "label": "Webhook event", "help": "channel_occupied, channel_vacated, member_added, member_removed, client_event, cache_miss or subscription_count." },
+  { "name": "channel", "type": "text", "label": "Channel" },
+  { "name": "userId", "type": "text", "label": "User ID" },
+  { "name": "event", "type": "text", "label": "Client event name" },
+  { "name": "data", "type": "text", "label": "Client event data" },
+  { "name": "socketId", "type": "text", "label": "Socket ID" },
+  { "name": "subscriptionCount", "type": "uinteger", "label": "Subscription count" },
+  { "name": "timeMs", "type": "uinteger", "label": "Time (ms since 1970)" }
+]
