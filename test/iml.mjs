@@ -14,6 +14,10 @@ const fns = {
     if (format !== 'X') throw new Error(`formatDate: only 'X' is implemented, got ${format}`);
     return String(Math.floor(d.getTime() / 1000));
   },
+  parseDate: (v, format) => {
+    if (format !== 'x') throw new Error(`parseDate: only 'x' is implemented, got ${format}`);
+    return new Date(Number(v));
+  },
   ifempty: (a, b) => (a === undefined || a === null || a === '' ? b : a),
   toArray: (o) => Object.entries(o ?? {}).map(([key, value]) => ({ key, value })),
   indexOf: (s, sub) => String(s ?? '').indexOf(sub),
