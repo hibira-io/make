@@ -24,7 +24,9 @@ const fns = {
 };
 
 function expr(source, scope) {
-  const js = source.replace(/\bif\(/g, '__if(');
+  // IML strings have no escape sequences: a backslash is a backslash and a
+  // newline is typed as is, so keep both literal in the JavaScript source.
+  const js = source.replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/\bif\(/g, '__if(');
   const names = [...Object.keys(fns), ...Object.keys(scope)];
   // eslint-disable-next-line no-new-func
   return new Function(...names, `return (${js});`)(...Object.values(fns), ...Object.values(scope));

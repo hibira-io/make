@@ -11,7 +11,7 @@
     "auth_version": "1.0",
     "filter_by_prefix": "{{ifempty(parameters.prefix, undefined)}}",
     "info": "{{if(temp.presence, 'user_count', undefined)}}",
-    "auth_signature": "{{sha256('GET\\n/apps/' + connection.appId + '/channels\\nauth_key=' + connection.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0' + if(parameters.prefix, '&filter_by_prefix=' + parameters.prefix, '') + if(temp.presence, '&info=user_count', ''), 'hex', connection.secret)}}"
+    "auth_signature": "{{sha256('GET\n/apps/' + connection.appId + '/channels\nauth_key=' + connection.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0' + if(parameters.prefix, '&filter_by_prefix=' + parameters.prefix, '') + if(temp.presence, '&info=user_count', ''), 'hex', connection.secret)}}"
   },
   "response": {
     "limit": "{{ifempty(parameters.limit, 100)}}",

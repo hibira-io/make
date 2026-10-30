@@ -19,7 +19,7 @@
     "auth_timestamp": "{{temp.ts}}",
     "auth_version": "1.0",
     "body_md5": "{{md5(createJSON(temp.payload))}}",
-    "auth_signature": "{{sha256('POST\\n/apps/' + connection.appId + '/events\\nauth_key=' + connection.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0&body_md5=' + md5(createJSON(temp.payload)), 'hex', connection.secret)}}"
+    "auth_signature": "{{sha256('POST\n/apps/' + connection.appId + '/events\nauth_key=' + connection.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0&body_md5=' + md5(createJSON(temp.payload)), 'hex', connection.secret)}}"
   },
   "response": {
     "output": {

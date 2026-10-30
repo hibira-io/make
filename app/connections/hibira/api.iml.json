@@ -8,7 +8,7 @@
     "auth_key": "{{parameters.key}}",
     "auth_timestamp": "{{temp.ts}}",
     "auth_version": "1.0",
-    "auth_signature": "{{sha256('GET\\n/apps/' + parameters.appId + '/channels\\nauth_key=' + parameters.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0', 'hex', parameters.secret)}}"
+    "auth_signature": "{{sha256('GET\n/apps/' + parameters.appId + '/channels\nauth_key=' + parameters.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0', 'hex', parameters.secret)}}"
   },
   "response": {
     "error": {
