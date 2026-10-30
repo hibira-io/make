@@ -24,11 +24,11 @@ const root = new URL('../app/', import.meta.url);
 const text = (p) => readFileSync(new URL(p, root), 'utf8');
 const json = (p) => JSON.parse(text(p));
 const app = json('app.json');
-const name = process.env.MAKE_APP_NAME || app.name;
+let name = process.env.MAKE_APP_NAME || app.name;
 const version = 1;
 const idsFile = new URL(`../.make-ids.json`, import.meta.url);
 const ids = existsSync(idsFile) ? JSON.parse(readFileSync(idsFile, 'utf8')) : {};
-const mine = (ids[`${zone}/${name}`] ??= { connections: {}, webhooks: {} });
+let mine;
 const save = () => writeFileSync(idsFile, JSON.stringify(ids, null, 2) + '\n');
 
 async function call(method, path, body, type = 'application/json') {
@@ -38,7 +38,8 @@ async function call(method, path, body, type = 'application/json') {
     body: body === undefined || typeof body === 'string' || Buffer.isBuffer(body) ? body : JSON.stringify(body),
   });
   const out = await res.text();
-  if (res.status === 404 && method === 'GET') return null;
+  // Make answers 403 for an app that isn't in your account.
+  if ((res.status === 404 || (res.status === 403 && /^\/sdk\/apps\/[^/]+\/\d+$/.test(path))) && method === 'GET') return null;
   if (!res.ok) throw new Error(`${method} ${path}: ${res.status} ${out.slice(0, 300)}`);
   try {
     return JSON.parse(out);
@@ -54,11 +55,16 @@ if (!exists) {
     console.error(`No app ${name} in ${zone}. Run with --create, or set MAKE_APP_NAME / MAKE_ZONE.`);
     process.exit(1);
   }
-  await call('POST', '/sdk/apps', { name, label: app.label, description: app.description, theme: app.theme, language: app.language, audience: app.audience, private: true });
+  const created = await call('POST', '/sdk/apps', { name, label: app.label, description: app.description, theme: app.theme, language: app.language, audience: app.audience, private: true });
+  // Make adds a suffix when the name is taken, such as hibira-kn21ip.
+  if (created.app.name !== name) console.log(`${name} is taken: set MAKE_APP_NAME=${created.app.name} on later runs`);
+  name = created.app.name;
   console.log(`created app ${name}`);
 }
+mine = ids[`${zone}/${name}`] ??= { connections: {}, webhooks: {} };
 
-await call('PATCH', `/sdk/apps/${name}/${version}/base`, text('base.iml.json'), 'application/jsonc');
+// PUT replaces the base; PATCH would merge it into Make's template.
+await call('PUT', `/sdk/apps/${name}/${version}/base`, text('base.iml.json'), 'application/jsonc');
 console.log('base');
 
 // Connections and webhooks: one folder each.

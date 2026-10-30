@@ -6,5 +6,5 @@
   { "name": "data", "type": "text", "label": "Client event data" },
   { "name": "socketId", "type": "text", "label": "Socket ID" },
   { "name": "subscriptionCount", "type": "uinteger", "label": "Subscription count" },
-  { "name": "timeMs", "type": "uinteger", "label": "Time (ms since 1970)" }
+  { "name": "time", "type": "date", "label": "Time" }
 ]

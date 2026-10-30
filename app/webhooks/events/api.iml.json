@@ -8,7 +8,7 @@
     "data": "{{item.data}}",
     "socketId": "{{item.socket_id}}",
     "subscriptionCount": "{{item.subscription_count}}",
-    "timeMs": "{{body.time_ms}}"
+    "time": "{{parseDate(body.time_ms, 'x')}}"
   },
   "respond": {
     "status": 200,

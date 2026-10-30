@@ -153,6 +153,6 @@ test('the webhook makes one bundle per event', () => {
   assert.equal(bundles.length, 3);
   assert.equal(bundles[1].userId, '42');
   assert.equal(bundles[2].event, 'client-typing');
-  assert.equal(bundles[0].timeMs, 1793260000000);
+  assert.equal(bundles[0].time.toISOString(), '2026-10-29T07:46:40.000Z');
   assert.deepEqual(evaluate(api.respond, {}), { status: 200, body: { ok: true } });
 });

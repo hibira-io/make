@@ -3,7 +3,7 @@
     "path": "/apps/{{connection.appId}}{{parameters.url}}",
     "query": "{{join(sort(split('auth_key=' + connection.key + '&auth_timestamp=' + formatDate(now, 'X') + '&auth_version=1.0' + if(parameters.body, '&body_md5=' + md5(parameters.body), '') + if(parameters.query, '&' + parameters.query, ''), '&')), '&')}}"
   },
-  "url": "{{temp.path}}?{{temp.query}}&auth_signature={{sha256(parameters.method + '\\n' + temp.path + '\\n' + temp.query, 'hex', connection.secret)}}",
+  "url": "{{temp.path}}?{{temp.query}}&auth_signature={{sha256(parameters.method + '\n' + temp.path + '\n' + temp.query, 'hex', connection.secret)}}",
   "method": "{{parameters.method}}",
   "type": "text",
   "headers": {

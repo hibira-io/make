@@ -14,6 +14,10 @@ const fns = {
     if (format !== 'X') throw new Error(`formatDate: only 'X' is implemented, got ${format}`);
     return String(Math.floor(d.getTime() / 1000));
   },
+  parseDate: (v, format) => {
+    if (format !== 'x') throw new Error(`parseDate: only 'x' is implemented, got ${format}`);
+    return new Date(Number(v));
+  },
   ifempty: (a, b) => (a === undefined || a === null || a === '' ? b : a),
   toArray: (o) => Object.entries(o ?? {}).map(([key, value]) => ({ key, value })),
   indexOf: (s, sub) => String(s ?? '').indexOf(sub),
@@ -24,7 +28,9 @@ const fns = {
 };
 
 function expr(source, scope) {
-  const js = source.replace(/\bif\(/g, '__if(');
+  // IML strings have no escape sequences: a backslash is a backslash and a
+  // newline is typed as is, so keep both literal in the JavaScript source.
+  const js = source.replace(/\\/g, '\\\\').replace(/\n/g, '\\n').replace(/\bif\(/g, '__if(');
   const names = [...Object.keys(fns), ...Object.keys(scope)];
   // eslint-disable-next-line no-new-func
   return new Function(...names, `return (${js});`)(...Object.values(fns), ...Object.values(scope));
