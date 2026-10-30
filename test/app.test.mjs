@@ -114,6 +114,31 @@ test('Get a channel asks user_count only for presence channels', async () => {
   }
 });
 
+test('Make an API call signs the path, sorted query and body_md5', async () => {
+  const s = await capture({ channels: {} });
+  try {
+    const opts = { connection: { ...connection, baseUrl: s.baseUrl }, baseUrl: s.baseUrl };
+    const get = await run(moduleApi('makeApiCall'), { ...opts, parameters: { url: '/channels', method: 'GET', query: 'info=user_count&filter_by_prefix=presence-' } });
+    const body = '{"name":"e","channels":["orders"],"data":"{}"}';
+    await run(moduleApi('makeApiCall'), { ...opts, parameters: { url: '/events', method: 'POST', body } });
+    const [a, b] = s.seen;
+    assert.equal(a.method, 'GET');
+    assert.equal(a.url.pathname, '/apps/3/channels');
+    assert.equal(a.url.searchParams.get('filter_by_prefix'), 'presence-');
+    assert.equal(a.url.searchParams.has('body_md5'), false);
+    assert.equal(a.url.searchParams.get('auth_signature'), expected('GET', '/apps/3/channels', a.url.searchParams, connection.secret));
+    assert.equal(get.output.statusCode, 200);
+    assert.deepEqual(get.output.body, { channels: {} });
+    assert.equal(b.method, 'POST');
+    assert.equal(b.body, body);
+    assert.equal(b.headers['content-type'], 'application/json');
+    assert.equal(b.url.searchParams.get('body_md5'), createHash('md5').update(body).digest('hex'));
+    assert.equal(b.url.searchParams.get('auth_signature'), expected('POST', '/apps/3/events', b.url.searchParams, connection.secret));
+  } finally {
+    s.close();
+  }
+});
+
 test('the webhook makes one bundle per event', () => {
   const body = {
     time_ms: 1793260000000,

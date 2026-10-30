@@ -15,6 +15,7 @@ channel and presence events.
 | Get a channel | Action | occupied, subscriptions, members (presence) |
 | List occupied channels | Search | by name prefix, with member counts for presence- prefixes |
 | List members of a presence channel | Search | user IDs |
+| Make an API call | Universal | a signed request to any other HTTP API endpoint |
 
 For example: a new row in a Google Sheet or a paid Stripe invoice triggers
 `order-updated` on `orders`, and every open dashboard updates at once; a
