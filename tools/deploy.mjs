@@ -63,7 +63,8 @@ if (!exists) {
 }
 mine = ids[`${zone}/${name}`] ??= { connections: {}, webhooks: {} };
 
-await call('PATCH', `/sdk/apps/${name}/${version}/base`, text('base.iml.json'), 'application/jsonc');
+// PUT replaces the base; PATCH would merge it into Make's template.
+await call('PUT', `/sdk/apps/${name}/${version}/base`, text('base.iml.json'), 'application/jsonc');
 console.log('base');
 
 // Connections and webhooks: one folder each.
