@@ -4,7 +4,7 @@
     "type": "text",
     "label": "URL",
     "required": true,
-    "help": "The path after /apps/{app ID}, such as /channels, /channels/presence-room-1/users, /events, /batch_events or /users/42/terminate_connections. See https://hibira.io/docs."
+    "help": "The path after /apps/{app ID}, such as /channels, /channels/presence-room-1/users, /events, /batch_events or /users/42/terminate_connections. See https://hibira.io/guides/make."
   },
   {
     "name": "method",
