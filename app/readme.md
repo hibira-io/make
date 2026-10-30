@@ -17,3 +17,4 @@ The secret only signs requests in Make; it is never sent.
 - **Get a channel**: whether a channel is occupied, its subscriptions, and its members for presence channels.
 - **List occupied channels**: channels with at least one subscriber, optionally by name prefix.
 - **List members of a presence channel**: the user IDs in a presence channel.
+- **Make an API call**: a signed request to any other endpoint of the HTTP API, such as `/batch_events` or `/users/{id}/terminate_connections`. Enter the path after `/apps/{app ID}`.

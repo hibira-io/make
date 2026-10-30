@@ -17,6 +17,9 @@ const fns = {
   ifempty: (a, b) => (a === undefined || a === null || a === '' ? b : a),
   toArray: (o) => Object.entries(o ?? {}).map(([key, value]) => ({ key, value })),
   indexOf: (s, sub) => String(s ?? '').indexOf(sub),
+  split: (s, sep) => String(s).split(sep),
+  sort: (a) => [...a].sort(),
+  join: (a, sep) => a.join(sep),
   __if: (c, a, b) => (c ? a : b),
 };
 
@@ -58,12 +61,12 @@ export async function run(api, { connection, parameters = {}, baseUrl }) {
   const url = evaluate(api.url, scope);
   const qs = evaluate(api.qs ?? {}, scope);
   const headers = evaluate(api.headers ?? {}, scope);
-  const method = api.method ?? 'GET';
+  const method = evaluate(api.method ?? 'GET', scope);
   let body;
   if (api.body !== undefined) {
     const b = evaluate(api.body, scope);
-    body = api.type === 'text' ? String(b) : JSON.stringify(b);
-    if (api.type !== 'text') headers['Content-Type'] ??= 'application/json';
+    if (b !== undefined) body = api.type === 'text' ? String(b) : JSON.stringify(b);
+    if (b !== undefined && api.type !== 'text') headers['Content-Type'] ??= 'application/json';
   }
   const full = new URL(url.startsWith('/') ? baseUrl + url : url);
   for (const [k, v] of Object.entries(qs)) full.searchParams.set(k, String(v));
@@ -75,7 +78,7 @@ export async function run(api, { connection, parameters = {}, baseUrl }) {
   } catch {
     resBody = text;
   }
-  const rscope = { ...scope, body: resBody, statusCode: res.status };
+  const rscope = { ...scope, body: resBody, headers: Object.fromEntries(res.headers), statusCode: res.status };
   if (res.status >= 400) {
     const message = evaluate((api.response?.error ?? read('base.iml.json').response.error).message, rscope);
     const err = new Error(message);

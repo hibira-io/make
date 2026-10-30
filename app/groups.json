@@ -1,4 +1,5 @@
 [
   { "label": "Events", "modules": ["watchEvents", "triggerEvent"] },
-  { "label": "Channels", "modules": ["getChannel", "listChannels", "listUsers"] }
+  { "label": "Channels", "modules": ["getChannel", "listChannels", "listUsers"] },
+  { "label": "Other", "modules": ["makeApiCall"] }
 ]
