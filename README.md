@@ -1,5 +1,7 @@
 # Hibira for Make
 
+![Hibira for Make](.github/cover.jpg)
+
 [![ci](https://github.com/hibira-io/make/actions/workflows/ci.yml/badge.svg)](https://github.com/hibira-io/make/actions/workflows/ci.yml)
 
 A [Make](https://www.make.com) custom app for
