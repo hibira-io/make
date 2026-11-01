@@ -156,3 +156,69 @@ test('the webhook makes one bundle per event', () => {
   assert.equal(bundles[0].time.toISOString(), '2026-10-29T07:46:40.000Z');
   assert.deepEqual(evaluate(api.respond, {}), { status: 200, body: { ok: true } });
 });
+
+test('Request an approval: JSON body, push target, body_md5 and signature', async () => {
+  const s = await capture({ approval_id: 'apr_1', status: 'pending', title: 'Ship?', options: ['Ship', 'Hold'], url: 'https://hibira.io/approve/apr_1/t' });
+  try {
+    const opts = { connection: { ...connection, baseUrl: s.baseUrl }, baseUrl: s.baseUrl };
+    const r = await run(moduleApi('requestApproval'), { ...opts, parameters: { title: 'Ship?', options: ['Ship', 'Hold'], pushTarget: 'users', pushTo: ['u1'] } });
+    const req = s.seen[0];
+    assert.equal(req.method, 'POST');
+    assert.equal(req.url.pathname, '/apps/3/approvals');
+    const body = JSON.parse(req.body);
+    assert.deepEqual(body.options, ['Ship', 'Hold']);
+    assert.deepEqual(body.push_users, ['u1']);
+    assert.equal(body.push_interests, null);
+    assert.equal(body.agent, 'Make');
+    assert.equal(body.expires_in_minutes, 60);
+    assert.equal(req.url.searchParams.get('body_md5'), createHash('md5').update(req.body).digest('hex'));
+    assert.equal(req.url.searchParams.get('auth_signature'), expected('POST', '/apps/3/approvals', req.url.searchParams, connection.secret));
+    assert.equal(r.output.approvalId, 'apr_1');
+    assert.equal(r.output.approved, false);
+    assert.equal(r.output.url, 'https://hibira.io/approve/apr_1/t');
+  } finally {
+    s.close();
+  }
+});
+
+test('Get an approval signs the wait parameter', async () => {
+  const s = await capture({ approval_id: 'apr_1', status: 'approved', choice: 'Ship' });
+  try {
+    const opts = { connection: { ...connection, baseUrl: s.baseUrl }, baseUrl: s.baseUrl };
+    const r = await run(moduleApi('getApproval'), { ...opts, parameters: { approvalId: 'apr_1', wait: 25 } });
+    await run(moduleApi('getApproval'), { ...opts, parameters: { approvalId: 'apr_1' } });
+    const [a, b] = s.seen;
+    assert.equal(a.url.pathname, '/apps/3/approvals/apr_1');
+    assert.equal(a.url.searchParams.get('wait'), '25');
+    assert.equal(b.url.searchParams.get('wait'), '0');
+    for (const q of [a, b]) assert.equal(q.url.searchParams.get('auth_signature'), expected('GET', '/apps/3/approvals/apr_1', q.url.searchParams, connection.secret));
+    assert.equal(r.output.approved, true);
+    assert.equal(r.output.choice, 'Ship');
+  } finally {
+    s.close();
+  }
+});
+
+test('Send a push notification uses the Push connection and one target list', async () => {
+  const s = await capture({ publishId: 'pub-1' });
+  try {
+    const push = { instanceId: 'inst-1', primaryKey: 'push-key', baseUrl: s.baseUrl };
+    const r = await run(moduleApi('sendPushNotification'), { connection: push, baseUrl: s.baseUrl, parameters: { target: 'interests', to: ['orders'], title: 'Shipped', body: 'Order #42 is on its way', link: 'https://example.jp/o/42' } });
+    const req = s.seen[0];
+    assert.equal(req.url.pathname, '/publish_api/v1/instances/inst-1/publishes/interests');
+    assert.equal(req.headers.authorization, 'Bearer push-key');
+    const body = JSON.parse(req.body);
+    assert.deepEqual(body.interests, ['orders']);
+    assert.equal(body.users, null);
+    assert.deepEqual(body.web.notification, { title: 'Shipped', body: 'Order #42 is on its way', deep_link: 'https://example.jp/o/42' });
+    assert.deepEqual(body.apns.aps.alert, { title: 'Shipped', body: 'Order #42 is on its way' });
+    assert.deepEqual(r.output, { publishId: 'pub-1', target: 'interests', to: ['orders'] });
+  } finally {
+    s.close();
+  }
+});
+
+test('the push secret key is a password field', () => {
+  const params = read('connections/hibiraPush/parameters.iml.json');
+  assert.equal(params.find((p) => p.name === 'primaryKey').type, 'password');
+});

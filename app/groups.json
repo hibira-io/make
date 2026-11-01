@@ -1,5 +1,7 @@
 [
   { "label": "Events", "modules": ["watchEvents", "triggerEvent"] },
+  { "label": "Approvals", "modules": ["requestApproval", "getApproval"] },
+  { "label": "Push notifications", "modules": ["sendPushNotification"] },
   { "label": "Channels", "modules": ["getChannel", "listChannels", "listUsers"] },
   { "label": "Other", "modules": ["makeApiCall"] }
 ]

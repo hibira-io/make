@@ -1,0 +1,50 @@
+[
+  {
+    "name": "approvalId",
+    "type": "text",
+    "label": "Approval ID"
+  },
+  {
+    "name": "status",
+    "type": "text",
+    "label": "Status"
+  },
+  {
+    "name": "approved",
+    "type": "boolean",
+    "label": "Approved"
+  },
+  {
+    "name": "choice",
+    "type": "text",
+    "label": "Choice"
+  },
+  {
+    "name": "comment",
+    "type": "text",
+    "label": "Comment"
+  },
+  {
+    "name": "title",
+    "type": "text",
+    "label": "Question"
+  },
+  {
+    "name": "options",
+    "type": "array",
+    "label": "Choices",
+    "spec": {
+      "type": "text"
+    }
+  },
+  {
+    "name": "expiresAt",
+    "type": "date",
+    "label": "Expires at"
+  },
+  {
+    "name": "answeredAt",
+    "type": "date",
+    "label": "Answered at"
+  }
+]

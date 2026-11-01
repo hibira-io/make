@@ -1,0 +1,30 @@
+{
+  "temp": {
+    "target": "{{if(parameters.target == 'users', 'users', 'interests')}}"
+  },
+  "url": "{{connection.baseUrl}}/publish_api/v1/instances/{{connection.instanceId}}/publishes/{{temp.target}}",
+  "method": "POST",
+  "headers": {
+    "Authorization": "Bearer {{connection.primaryKey}}"
+  },
+  "body": {
+    "interests": "{{if(temp.target == 'interests', parameters.to, null)}}",
+    "users": "{{if(temp.target == 'users', parameters.to, null)}}",
+    "web": { "notification": { "title": "{{parameters.title}}", "body": "{{parameters.body}}", "deep_link": "{{parameters.link}}" } },
+    "fcm": { "notification": { "title": "{{parameters.title}}", "body": "{{parameters.body}}" } },
+    "apns": { "aps": { "alert": { "title": "{{parameters.title}}", "body": "{{parameters.body}}" } } }
+  },
+  "response": {
+    "error": {
+      "message": "[{{statusCode}}] {{ifempty(body.description, ifempty(body.error, body))}}"
+    },
+    "output": {
+      "publishId": "{{body.publishId}}",
+      "target": "{{temp.target}}",
+      "to": "{{parameters.to}}"
+    }
+  },
+  "log": {
+    "sanitize": ["request.headers.authorization"]
+  }
+}

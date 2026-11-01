@@ -1,0 +1,10 @@
+[
+  { "name": "approvalId", "type": "text", "label": "Approval ID", "required": true, "help": "The Approval ID from Request an approval (apr_...)." },
+  {
+    "name": "wait",
+    "type": "uinteger",
+    "label": "Wait up to (seconds)",
+    "validate": { "max": 25 },
+    "help": "0 to 25. Holds the module until the person answers or the time runs out. To wait longer, put this module after a Repeater and stop when Status is no longer pending."
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "temp": {
+    "ts": "{{formatDate(now, 'X')}}",
+    "wait": "{{ifempty(parameters.wait, 0)}}"
+  },
+  "url": "/apps/{{connection.appId}}/approvals/{{parameters.approvalId}}",
+  "method": "GET",
+  "qs": {
+    "auth_key": "{{connection.key}}",
+    "auth_timestamp": "{{temp.ts}}",
+    "auth_version": "1.0",
+    "wait": "{{temp.wait}}",
+    "auth_signature": "{{sha256('GET\n/apps/' + connection.appId + '/approvals/' + parameters.approvalId + '\nauth_key=' + connection.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0&wait=' + temp.wait, 'hex', connection.secret)}}"
+  },
+  "response": {
+    "output": {
+      "approvalId": "{{body.approval_id}}",
+      "status": "{{body.status}}",
+      "approved": "{{body.status == 'approved'}}",
+      "choice": "{{body.choice}}",
+      "comment": "{{body.comment}}",
+      "title": "{{body.title}}",
+      "options": "{{body.options}}",
+      "expiresAt": "{{body.expires_at}}",
+      "answeredAt": "{{body.answered_at}}"
+    }
+  }
+}
