@@ -1,0 +1,1 @@
+{ "typeId": 4, "label": "Request an approval", "description": "Asks a person to approve or choose through a Hibira-hosted answer link.", "connection": "hibira" }

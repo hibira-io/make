@@ -1,0 +1,1 @@
+{ "typeId": 4, "label": "Get an approval", "description": "Gets the status and answer of an approval request, waiting up to 25 seconds for it.", "connection": "hibira" }

@@ -1,0 +1,1 @@
+{ "typeId": 4, "label": "Send a push notification", "description": "Sends a push notification to iOS, Android and web devices subscribed to interests, or to user IDs.", "connection": "hibiraPush" }

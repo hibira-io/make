@@ -1,0 +1,12 @@
+[
+  { "name": "instanceId", "type": "text", "label": "Instance ID", "required": true, "help": "In the Hibira portal: your app > Push. Turn on Push first." },
+  { "name": "primaryKey", "type": "password", "label": "Secret key", "required": true, "help": "The Push secret key from the same page. Sent as a Bearer token to the push API." },
+  {
+    "name": "baseUrl",
+    "type": "url",
+    "label": "API URL",
+    "default": "https://ws.hibira.io",
+    "advanced": true,
+    "help": "https://ws.hibira.io for the default cluster. Change it only for another cluster or a self-hosted server."
+  }
+]

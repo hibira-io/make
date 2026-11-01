@@ -1,0 +1,24 @@
+[
+  {
+    "name": "target",
+    "type": "select",
+    "label": "Send to",
+    "default": "interests",
+    "required": true,
+    "options": [
+      { "label": "Interests", "value": "interests" },
+      { "label": "User IDs", "value": "users" }
+    ]
+  },
+  {
+    "name": "to",
+    "type": "array",
+    "label": "Interests or user IDs",
+    "required": true,
+    "spec": { "type": "text", "label": "Name" },
+    "help": "Up to 100 interests, or up to 1000 user IDs, such as orders or user-42."
+  },
+  { "name": "title", "type": "text", "label": "Title", "required": true },
+  { "name": "body", "type": "text", "label": "Body", "multiline": true },
+  { "name": "link", "type": "url", "label": "Link (web)", "help": "Opened when a web notification is clicked." }
+]

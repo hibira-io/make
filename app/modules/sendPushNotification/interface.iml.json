@@ -1,0 +1,5 @@
+[
+  { "name": "publishId", "type": "text", "label": "Publish ID" },
+  { "name": "target", "type": "text", "label": "Sent to" },
+  { "name": "to", "type": "array", "label": "Interests or user IDs", "spec": { "type": "text" } }
+]

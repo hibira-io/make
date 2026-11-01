@@ -1,7 +1,7 @@
 {
   "name": "hibira",
   "label": "Hibira",
-  "description": "Send realtime events to websites and apps, read channels and members, and react to channel and presence webhooks on Hibira, a Pusher-compatible realtime service.",
+  "description": "Send realtime events and push notifications, ask people for approval, read channels and members, and react to channel and presence webhooks on Hibira, a Pusher-compatible realtime service.",
   "theme": "#e5484d",
   "language": "en",
   "audience": "global"

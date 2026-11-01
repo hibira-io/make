@@ -1,0 +1,25 @@
+[
+  { "name": "title", "type": "text", "label": "Question", "required": true, "help": "What needs a decision, as a short question (at most 200 characters), such as Refund order #1042 for $89?" },
+  {
+    "name": "options",
+    "type": "array",
+    "label": "Choices",
+    "spec": { "type": "text", "label": "Choice" },
+    "help": "2 to 4 choices. The first one approves; any other rejects. Leave empty for Approve and Reject."
+  },
+  { "name": "details", "type": "text", "label": "Details", "multiline": true, "help": "Context shown to the person: what will happen and why (at most 4000 characters)." },
+  { "name": "expires", "type": "uinteger", "label": "Expires in (minutes)", "help": "How long the link can be answered: 1 to 10080 (7 days). Default 60." },
+  { "name": "channel", "type": "text", "label": "Channel", "help": "Optional channel to announce the request and its answer on, for the @hibira-io/approvals inbox, such as private-hibira-approvals.ops." },
+  {
+    "name": "pushTarget",
+    "type": "select",
+    "label": "Push the link to",
+    "default": "interests",
+    "options": [
+      { "label": "Interests", "value": "interests" },
+      { "label": "User IDs", "value": "users" }
+    ],
+    "help": "Optionally send the link as a push notification. The app needs Push turned on."
+  },
+  { "name": "pushTo", "type": "array", "label": "Interests or user IDs", "spec": { "type": "text", "label": "Name" } }
+]

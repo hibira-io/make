@@ -14,6 +14,9 @@ channel and presence events.
 |---|---|---|
 | Watch webhook events | Instant trigger | channel occupied or vacated, member added or removed, client events |
 | Trigger an event | Action | sends an event to up to 100 channels |
+| Request an approval | Action | asks a person to approve or choose through a hosted answer link, optionally sent by push |
+| Get an approval | Action | status and answer of a request, waiting up to 25 s |
+| Send a push notification | Action | iOS, Android and web, by interest or user ID (Hibira Push connection) |
 | Get a channel | Action | occupied, subscriptions, members (presence) |
 | List occupied channels | Search | by name prefix, with member counts for presence- prefixes |
 | List members of a presence channel | Search | user IDs |

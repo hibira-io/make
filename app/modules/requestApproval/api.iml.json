@@ -1,0 +1,44 @@
+{
+  "temp": {
+    "ts": "{{formatDate(now, 'X')}}",
+    "payload": {
+      "title": "{{parameters.title}}",
+      "options": "{{parameters.options}}",
+      "details": "{{parameters.details}}",
+      "expires_in_minutes": "{{ifempty(parameters.expires, 60)}}",
+      "channel": "{{parameters.channel}}",
+      "push_interests": "{{if(parameters.pushTarget == 'users', null, parameters.pushTo)}}",
+      "push_users": "{{if(parameters.pushTarget == 'users', parameters.pushTo, null)}}",
+      "agent": "Make"
+    }
+  },
+  "url": "/apps/{{connection.appId}}/approvals",
+  "method": "POST",
+  "type": "text",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{{createJSON(temp.payload)}}",
+  "qs": {
+    "auth_key": "{{connection.key}}",
+    "auth_timestamp": "{{temp.ts}}",
+    "auth_version": "1.0",
+    "body_md5": "{{md5(createJSON(temp.payload))}}",
+    "auth_signature": "{{sha256('POST\n/apps/' + connection.appId + '/approvals\nauth_key=' + connection.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0&body_md5=' + md5(createJSON(temp.payload)), 'hex', connection.secret)}}"
+  },
+  "response": {
+    "output": {
+      "approvalId": "{{body.approval_id}}",
+      "status": "{{body.status}}",
+      "approved": "{{body.status == 'approved'}}",
+      "choice": "{{body.choice}}",
+      "comment": "{{body.comment}}",
+      "title": "{{body.title}}",
+      "options": "{{body.options}}",
+      "expiresAt": "{{body.expires_at}}",
+      "answeredAt": "{{body.answered_at}}",
+      "url": "{{body.url}}",
+      "pushError": "{{body.push_error}}"
+    }
+  }
+}
