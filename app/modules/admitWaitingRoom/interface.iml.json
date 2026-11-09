@@ -1,0 +1,65 @@
+[
+  {
+    "name": "room",
+    "type": "text",
+    "label": "Room"
+  },
+  {
+    "name": "title",
+    "type": "text",
+    "label": "Title"
+  },
+  {
+    "name": "state",
+    "type": "text",
+    "label": "State"
+  },
+  {
+    "name": "waiting",
+    "type": "uinteger",
+    "label": "Waiting"
+  },
+  {
+    "name": "admitted",
+    "type": "uinteger",
+    "label": "Admitted up to number"
+  },
+  {
+    "name": "issued",
+    "type": "uinteger",
+    "label": "Numbers issued"
+  },
+  {
+    "name": "admitPerMinute",
+    "type": "uinteger",
+    "label": "Admit per minute"
+  },
+  {
+    "name": "startsAt",
+    "type": "date",
+    "label": "Starts at"
+  },
+  {
+    "name": "burst",
+    "type": "uinteger",
+    "label": "Burst"
+  },
+  {
+    "name": "passTtlSeconds",
+    "type": "uinteger",
+    "label": "Pass lifetime (seconds)"
+  },
+  {
+    "name": "returnUrls",
+    "type": "array",
+    "label": "Return URLs",
+    "spec": {
+      "type": "url"
+    }
+  },
+  {
+    "name": "channel",
+    "type": "text",
+    "label": "Status channel"
+  }
+]

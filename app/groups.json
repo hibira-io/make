@@ -2,6 +2,7 @@
   { "label": "Events", "modules": ["watchEvents", "triggerEvent"] },
   { "label": "Approvals", "modules": ["requestApproval", "getApproval"] },
   { "label": "Push notifications", "modules": ["sendPushNotification"] },
+  { "label": "Waiting rooms", "modules": ["getWaitingRoom", "updateWaitingRoom", "admitWaitingRoom", "verifyWaitingRoomPass"] },
   { "label": "Channels", "modules": ["getChannel", "listChannels", "listUsers"] },
   { "label": "Other", "modules": ["makeApiCall"] }
 ]

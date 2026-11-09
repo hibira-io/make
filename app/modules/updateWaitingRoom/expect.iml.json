@@ -1,0 +1,79 @@
+[
+  {
+    "name": "room",
+    "type": "text",
+    "label": "Room",
+    "required": true,
+    "help": "The waiting room name: 1 to 64 letters, digits, - or _, such as presale."
+  },
+  {
+    "name": "admitPerMinute",
+    "type": "uinteger",
+    "label": "Admit per minute",
+    "validate": {
+      "min": 1
+    },
+    "help": "How many visitors to let through each minute. Required when the room is new; leave empty to keep the current rate."
+  },
+  {
+    "name": "state",
+    "type": "select",
+    "label": "State",
+    "options": [
+      {
+        "label": "Open",
+        "value": "open"
+      },
+      {
+        "label": "Paused (visitors can join, nobody is admitted)",
+        "value": "paused"
+      },
+      {
+        "label": "Closed (nobody can join)",
+        "value": "closed"
+      }
+    ],
+    "help": "Leave empty to keep the current state. A new room opens."
+  },
+  {
+    "name": "startsAt",
+    "type": "date",
+    "label": "Starts at",
+    "help": "When admission starts. Visitors can join the queue before then."
+  },
+  {
+    "name": "title",
+    "type": "text",
+    "label": "Title",
+    "help": "Shown on the waiting page, at most 120 characters."
+  },
+  {
+    "name": "burst",
+    "type": "uinteger",
+    "label": "Burst",
+    "validate": {
+      "min": 1
+    },
+    "help": "How many visitors may be admitted at once when the queue starts moving."
+  },
+  {
+    "name": "passTtlSeconds",
+    "type": "uinteger",
+    "label": "Pass lifetime (seconds)",
+    "validate": {
+      "min": 60,
+      "max": 86400
+    },
+    "help": "How long an admitted visitor stays in: 60 to 86400. Default 1800."
+  },
+  {
+    "name": "returnUrls",
+    "type": "array",
+    "label": "Return URLs",
+    "spec": {
+      "type": "url",
+      "label": "URL"
+    },
+    "help": "Addresses visitors may be sent back to (https; http only for localhost). Up to 10."
+  }
+]

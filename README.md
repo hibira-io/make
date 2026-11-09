@@ -17,6 +17,10 @@ channel and presence events.
 | Request an approval | Action | asks a person to approve or choose through a hosted answer link, optionally sent by push |
 | Get an approval | Action | status and answer of a request, waiting up to 25 s |
 | Send a push notification | Action | iOS, Android and web, by interest or user ID (Hibira Push connection) |
+| Get a waiting room | Action | settings and how many visitors are waiting and admitted |
+| Create or update a waiting room | Action | open, pause or close a room, set its rate, start time, title and return URLs |
+| Admit visitors from a waiting room | Action | lets the next N visitors through now |
+| Verify a waiting room pass | Action | checks a visitor's pass; returns its queue number and ticket ID |
 | Get a channel | Action | occupied, subscriptions, members (presence) |
 | List occupied channels | Search | by name prefix, with member counts for presence- prefixes |
 | List members of a presence channel | Search | user IDs |

@@ -1,0 +1,15 @@
+{
+  "room": "presale",
+  "title": "Spring drop",
+  "state": "open",
+  "waiting": 1840,
+  "admitted": 260,
+  "issued": 2100,
+  "admitPerMinute": 200,
+  "burst": 200,
+  "passTtlSeconds": 1800,
+  "returnUrls": [
+    "https://shop.example.com/drop"
+  ],
+  "channel": "hibira-waitroom-presale"
+}

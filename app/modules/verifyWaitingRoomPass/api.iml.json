@@ -1,0 +1,31 @@
+{
+  "temp": {
+    "ts": "{{formatDate(now, 'X')}}",
+    "payload": {
+      "pass": "{{parameters.pass}}"
+    }
+  },
+  "url": "/apps/{{connection.appId}}/waiting_rooms/{{parameters.room}}/verify",
+  "method": "POST",
+  "type": "text",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{{createJSON(temp.payload)}}",
+  "qs": {
+    "auth_key": "{{connection.key}}",
+    "auth_timestamp": "{{temp.ts}}",
+    "auth_version": "1.0",
+    "body_md5": "{{md5(createJSON(temp.payload))}}",
+    "auth_signature": "{{sha256('POST\n/apps/' + connection.appId + '/waiting_rooms/' + parameters.room + '/verify\nauth_key=' + connection.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0&body_md5=' + md5(createJSON(temp.payload)), 'hex', connection.secret)}}"
+  },
+  "response": {
+    "output": {
+      "room": "{{parameters.room}}",
+      "valid": "{{body.valid}}",
+      "number": "{{body.number}}",
+      "ticketId": "{{body.ticket_id}}",
+      "expiresAt": "{{body.expires_at}}"
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "temp": {
+    "ts": "{{formatDate(now, 'X')}}",
+    "payload": {
+      "admit_per_minute": "{{ifempty(parameters.admitPerMinute, null)}}",
+      "state": "{{ifempty(parameters.state, null)}}",
+      "starts_at": "{{ifempty(parameters.startsAt, null)}}",
+      "title": "{{ifempty(parameters.title, null)}}",
+      "burst": "{{ifempty(parameters.burst, null)}}",
+      "pass_ttl_seconds": "{{ifempty(parameters.passTtlSeconds, null)}}",
+      "return_urls": "{{ifempty(parameters.returnUrls, null)}}"
+    }
+  },
+  "url": "/apps/{{connection.appId}}/waiting_rooms/{{parameters.room}}",
+  "method": "POST",
+  "type": "text",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{{createJSON(temp.payload)}}",
+  "qs": {
+    "auth_key": "{{connection.key}}",
+    "auth_timestamp": "{{temp.ts}}",
+    "auth_version": "1.0",
+    "body_md5": "{{md5(createJSON(temp.payload))}}",
+    "auth_signature": "{{sha256('POST\n/apps/' + connection.appId + '/waiting_rooms/' + parameters.room + '\nauth_key=' + connection.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0&body_md5=' + md5(createJSON(temp.payload)), 'hex', connection.secret)}}"
+  },
+  "response": {
+    "output": {
+      "room": "{{body.room}}",
+      "title": "{{body.title}}",
+      "state": "{{body.state}}",
+      "waiting": "{{body.waiting}}",
+      "admitted": "{{body.admitted}}",
+      "issued": "{{body.issued}}",
+      "admitPerMinute": "{{body.admit_per_minute}}",
+      "startsAt": "{{body.starts_at}}",
+      "burst": "{{body.burst}}",
+      "passTtlSeconds": "{{body.pass_ttl_seconds}}",
+      "returnUrls": "{{body.return_urls}}",
+      "channel": "{{body.channel}}"
+    }
+  }
+}
