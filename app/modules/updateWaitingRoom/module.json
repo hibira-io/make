@@ -1,0 +1,1 @@
+{ "typeId": 4, "label": "Create or update a waiting room", "description": "Creates a waiting room, or changes its state, admission rate, start time or other settings.", "connection": "hibira" }

@@ -1,0 +1,1 @@
+{ "typeId": 4, "label": "Admit visitors from a waiting room", "description": "Lets the next visitors in the queue through now, on top of the steady rate.", "connection": "hibira" }

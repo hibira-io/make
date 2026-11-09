@@ -1,0 +1,28 @@
+[
+  {
+    "name": "room",
+    "type": "text",
+    "label": "Room"
+  },
+  {
+    "name": "valid",
+    "type": "boolean",
+    "label": "Valid"
+  },
+  {
+    "name": "number",
+    "type": "uinteger",
+    "label": "Queue number"
+  },
+  {
+    "name": "ticketId",
+    "type": "text",
+    "label": "Ticket ID",
+    "help": "Record it to allow one checkout per place in line."
+  },
+  {
+    "name": "expiresAt",
+    "type": "date",
+    "label": "Expires at"
+  }
+]

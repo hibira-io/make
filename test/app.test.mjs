@@ -222,3 +222,45 @@ test('the push secret key is a password field', () => {
   const params = read('connections/hibiraPush/parameters.iml.json');
   assert.equal(params.find((p) => p.name === 'primaryKey').type, 'password');
 });
+
+const ROOM = { room: 'presale', title: 'Drop', state: 'open', waiting: 5, admitted: 10, issued: 15, admit_per_minute: 50, burst: 50, pass_ttl_seconds: 1800, return_urls: [], channel: 'hibira-waitroom-presale' };
+
+test('Waiting rooms: get, create or update, admit and verify are signed', async () => {
+  const s = await capture(ROOM);
+  try {
+    const opts = { connection: { ...connection, baseUrl: s.baseUrl }, baseUrl: s.baseUrl };
+    const got = await run(moduleApi('getWaitingRoom'), { ...opts, parameters: { room: 'presale' } });
+    await run(moduleApi('updateWaitingRoom'), { ...opts, parameters: { room: 'presale', admitPerMinute: 50, state: 'paused', startsAt: '2026-12-04T03:00:00.000Z', returnUrls: ['https://shop.example.com/drop'] } });
+    await run(moduleApi('updateWaitingRoom'), { ...opts, parameters: { room: 'presale', state: '' } });
+    await run(moduleApi('admitWaitingRoom'), { ...opts, parameters: { room: 'presale', count: 100 } });
+    await run(moduleApi('verifyWaitingRoomPass'), { ...opts, parameters: { room: 'presale', pass: 'abc.def' } });
+    const [get, create, update, admit, verify] = s.seen;
+    assert.equal(get.method, 'GET');
+    assert.equal(get.url.pathname, '/apps/3/waiting_rooms/presale');
+    assert.deepEqual(JSON.parse(create.body), { admit_per_minute: 50, state: 'paused', starts_at: '2026-12-04T03:00:00.000Z', title: null, burst: null, pass_ttl_seconds: null, return_urls: ['https://shop.example.com/drop'] });
+    assert.ok(Object.values(JSON.parse(update.body)).every((v) => v === null), 'empty fields are left unchanged');
+    assert.equal(admit.url.pathname, '/apps/3/waiting_rooms/presale/admit');
+    assert.deepEqual(JSON.parse(admit.body), { count: 100 });
+    assert.equal(verify.url.pathname, '/apps/3/waiting_rooms/presale/verify');
+    assert.deepEqual(JSON.parse(verify.body), { pass: 'abc.def' });
+    for (const r of s.seen) {
+      if (r.method === 'POST') assert.equal(r.url.searchParams.get('body_md5'), createHash('md5').update(r.body).digest('hex'));
+      assert.equal(r.url.searchParams.get('auth_signature'), expected(r.method, r.url.pathname, r.url.searchParams, connection.secret));
+    }
+    assert.equal(got.output.waiting, 5);
+    assert.equal(got.output.admitPerMinute, 50);
+    assert.equal(got.output.channel, 'hibira-waitroom-presale');
+  } finally {
+    s.close();
+  }
+});
+
+test('Verify a waiting room pass outputs the claims', async () => {
+  const s = await capture({ valid: true, number: 42, ticket_id: 'd79fe789a38b8631b5', expires_at: '2027-01-15T08:30:00Z' });
+  try {
+    const r = await run(moduleApi('verifyWaitingRoomPass'), { connection: { ...connection, baseUrl: s.baseUrl }, baseUrl: s.baseUrl, parameters: { room: 'presale', pass: 'x.y' } });
+    assert.deepEqual(r.output, { room: 'presale', valid: true, number: 42, ticketId: 'd79fe789a38b8631b5', expiresAt: '2027-01-15T08:30:00Z' });
+  } finally {
+    s.close();
+  }
+});

@@ -1,0 +1,19 @@
+[
+  {
+    "name": "room",
+    "type": "text",
+    "label": "Room",
+    "required": true,
+    "help": "The waiting room name: 1 to 64 letters, digits, - or _, such as presale."
+  },
+  {
+    "name": "count",
+    "type": "uinteger",
+    "label": "Visitors",
+    "required": true,
+    "validate": {
+      "min": 1
+    },
+    "help": "How many of the next visitors to admit."
+  }
+]

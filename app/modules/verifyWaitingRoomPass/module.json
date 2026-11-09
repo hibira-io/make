@@ -1,0 +1,1 @@
+{ "typeId": 4, "label": "Verify a waiting room pass", "description": "Checks a pass a visitor brought back from the waiting room, such as from a checkout form.", "connection": "hibira" }

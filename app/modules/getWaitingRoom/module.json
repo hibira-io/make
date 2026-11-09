@@ -1,0 +1,1 @@
+{ "typeId": 4, "label": "Get a waiting room", "description": "Gets a waiting room's settings and how many visitors are waiting and admitted.", "connection": "hibira" }

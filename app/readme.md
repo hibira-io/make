@@ -19,6 +19,10 @@ The secret only signs requests in Make; it is never sent.
 - **Request an approval**: asks a person to approve or choose (2 to 4 choices; the first approves) and returns an answer link anyone can use once. Send the link by email or chat, or let Hibira push it to interests or user IDs, or announce it on a channel for the @hibira-io/approvals inbox. Needs an app in a Hibira account.
 - **Get an approval**: the request's status (pending, approved, rejected or expired), choice and comment. It waits up to 25 seconds for an answer; to wait longer, run it after a **Repeater** and stop once Status is not pending, or check later in another scenario.
 - **Send a push notification**: title, body and web link to iOS, Android and web devices subscribed to interests, or to user IDs.
+- **Get a waiting room**: a waiting room's state, admission rate, start time and counts (waiting, admitted, numbers issued). Needs the waiting room add-on.
+- **Create or update a waiting room**: creates a room (Admit per minute is required) or changes it. Empty fields keep their current values, so a scenario can pause a room when stock runs out or open it on a schedule.
+- **Admit visitors from a waiting room**: lets the next visitors through now, on top of the steady rate, such as when a sale opens.
+- **Verify a waiting room pass**: checks the pass a visitor brings back (the `hibira_pass` parameter or the `hibira_wr_<room>` cookie) and returns Valid, the queue number and the ticket ID. Record the ticket ID to allow one checkout per place in line.
 - **Get a channel**: whether a channel is occupied, its subscriptions, and its members for presence channels.
 - **List occupied channels**: channels with at least one subscriber, optionally by name prefix.
 - **List members of a presence channel**: the user IDs in a presence channel.

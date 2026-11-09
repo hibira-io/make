@@ -1,0 +1,16 @@
+[
+  {
+    "name": "room",
+    "type": "text",
+    "label": "Room",
+    "required": true,
+    "help": "The waiting room name: 1 to 64 letters, digits, - or _, such as presale."
+  },
+  {
+    "name": "pass",
+    "type": "text",
+    "label": "Pass",
+    "required": true,
+    "help": "The hibira_pass query parameter, or the hibira_wr_<room> cookie value."
+  }
+]
