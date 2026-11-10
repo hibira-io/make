@@ -63,6 +63,12 @@ if (!exists) {
 }
 mine = ids[`${zone}/${name}`] ??= { connections: {}, webhooks: {} };
 
+// Without .make-ids.json (a CI run, a new machine), reuse the connection or
+// webhook Make already has with the same label instead of adding another.
+const listed = async (kind, key) => (await call('GET', `/sdk/apps/${name}/${kind}`))?.[key] ?? [];
+const existing = { connections: await listed('connections', 'appConnections'), webhooks: await listed('webhooks', 'appWebhooks') };
+const byLabel = (kind, label) => existing[kind].find((x) => x.label === label)?.name;
+
 // PUT replaces the base; PATCH would merge it into Make's template.
 await call('PUT', `/sdk/apps/${name}/${version}/base`, text('base.iml.json'), 'application/jsonc');
 console.log('base');
@@ -70,7 +76,8 @@ console.log('base');
 // Connections and webhooks: one folder each.
 for (const local of readdirSync(new URL('connections/', root))) {
   const meta = json(`connections/${local}/connection.json`);
-  let remote = mine.connections[local];
+  let remote = mine.connections[local] ?? byLabel('connections', meta.label);
+  if (remote) mine.connections[local] = remote;
   if (!remote || !(await call('GET', `/sdk/apps/connections/${remote}`))) {
     remote = (await call('POST', `/sdk/apps/${name}/connections`, meta)).appConnection.name;
     mine.connections[local] = remote;
@@ -82,7 +89,8 @@ for (const local of readdirSync(new URL('connections/', root))) {
 }
 for (const local of readdirSync(new URL('webhooks/', root))) {
   const meta = json(`webhooks/${local}/webhook.json`);
-  let remote = mine.webhooks[local];
+  let remote = mine.webhooks[local] ?? byLabel('webhooks', meta.label);
+  if (remote) mine.webhooks[local] = remote;
   if (!remote || !(await call('GET', `/sdk/apps/webhooks/${remote}`))) {
     remote = (await call('POST', `/sdk/apps/${name}/webhooks`, { ...meta, connection: mine.connections[meta.connection] })).appWebhook.name;
     mine.webhooks[local] = remote;

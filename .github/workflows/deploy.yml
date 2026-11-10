@@ -1,0 +1,43 @@
+# Uploads app/ to the Hibira custom app in Make (eu1, hibira-kn21ip) with
+# tools/deploy.mjs. Runs on every push to main that changes app/ or the
+# deploy script, and by hand from the Actions tab.
+# Needs the repository secret MAKE_API_TOKEN (Make > Profile > API access,
+# scopes sdk-apps:read and sdk-apps:write).
+name: deploy
+on:
+  push:
+    branches: [main]
+    paths:
+      - "app/**"
+      - "tools/deploy.mjs"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: make-deploy
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      MAKE_ZONE: eu1.make.com
+      MAKE_APP_NAME: hibira-kn21ip
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: npm ci
+      - run: npm test
+      - name: Deploy to Make
+        env:
+          MAKE_API_TOKEN: ${{ secrets.MAKE_API_TOKEN }}
+        run: |
+          if [ -z "$MAKE_API_TOKEN" ]; then
+            echo "::error::Add the MAKE_API_TOKEN secret (Make > Profile > API access, scopes sdk-apps:read and sdk-apps:write)."
+            exit 1
+          fi
+          node tools/deploy.mjs
