@@ -1,5 +1,5 @@
 [
-  { "label": "Events", "modules": ["watchEvents", "triggerEvent"] },
+  { "label": "Events", "modules": ["watchEvents", "triggerEvent", "updateLiveChart"] },
   { "label": "Approvals", "modules": ["requestApproval", "getApproval"] },
   { "label": "Push notifications", "modules": ["sendPushNotification"] },
   { "label": "Waiting rooms", "modules": ["getWaitingRoom", "updateWaitingRoom", "admitWaitingRoom", "verifyWaitingRoomPass"] },

@@ -1,0 +1,37 @@
+{
+  "temp": {
+    "ts": "{{formatDate(now, 'X')}}",
+    "chart": {
+      "value": "{{if(parameters.update == 'value', parameters.number, null)}}",
+      "add": "{{if(parameters.update == 'add', parameters.number, if(parameters.update == 'addLabels', toCollection(parameters.labels, 'label', 'value'), null))}}",
+      "values": "{{if(parameters.update == 'values', toCollection(parameters.labels, 'label', 'value'), null)}}",
+      "reset": "{{if(parameters.update == 'reset', true, null)}}",
+      "max": "{{ifempty(parameters.max, null)}}",
+      "title": "{{ifempty(parameters.title, null)}}",
+      "subtitle": "{{ifempty(parameters.subtitle, null)}}",
+      "status": "{{ifempty(parameters.status, null)}}"
+    }
+  },
+  "url": "/apps/{{connection.appId}}/events",
+  "method": "POST",
+  "type": "text",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": "{{'{\"name\":' + createJSON(ifempty(parameters.event, 'chart.update')) + ',\"channels\":[' + createJSON(parameters.channel) + '],\"data\":' + createJSON(createJSON(temp.chart)) + '}'}}",
+  "qs": {
+    "auth_key": "{{connection.key}}",
+    "auth_timestamp": "{{temp.ts}}",
+    "auth_version": "1.0",
+    "body_md5": "{{md5('{\"name\":' + createJSON(ifempty(parameters.event, 'chart.update')) + ',\"channels\":[' + createJSON(parameters.channel) + '],\"data\":' + createJSON(createJSON(temp.chart)) + '}')}}",
+    "auth_signature": "{{sha256('POST\n/apps/' + connection.appId + '/events\nauth_key=' + connection.key + '&auth_timestamp=' + temp.ts + '&auth_version=1.0&body_md5=' + md5('{\"name\":' + createJSON(ifempty(parameters.event, 'chart.update')) + ',\"channels\":[' + createJSON(parameters.channel) + '],\"data\":' + createJSON(createJSON(temp.chart)) + '}'), 'hex', connection.secret)}}"
+  },
+  "response": {
+    "output": {
+      "channel": "{{parameters.channel}}",
+      "event": "{{ifempty(parameters.event, 'chart.update')}}",
+      "data": "{{temp.chart}}",
+      "sent": true
+    }
+  }
+}

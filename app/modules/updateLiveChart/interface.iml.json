@@ -1,0 +1,6 @@
+[
+  { "name": "channel", "type": "text", "label": "Channel" },
+  { "name": "event", "type": "text", "label": "Event name" },
+  { "name": "data", "type": "any", "label": "Update sent" },
+  { "name": "sent", "type": "boolean", "label": "Sent" }
+]

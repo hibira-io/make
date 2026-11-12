@@ -80,6 +80,34 @@ test('Trigger an event: JSON body, body_md5 and signature', async () => {
   }
 });
 
+test('Update a live chart: chart.update with the chosen update, signed', async () => {
+  const s = await capture({});
+  try {
+    const opts = { connection: { ...connection, baseUrl: s.baseUrl }, baseUrl: s.baseUrl };
+    const chan = 'private-chart-3f9a1c2b7d4e';
+    const bars = [{ label: 'North', value: 1 }, { label: '東京', value: 2 }];
+    const runs = [
+      [{ update: 'value', number: 42, title: 'Orders today' }, { value: 42, title: 'Orders today' }],
+      [{ update: 'add', number: -1 }, { add: -1 }],
+      [{ update: 'addLabels', labels: bars, max: 500 }, { add: { North: 1, 東京: 2 }, max: 500 }],
+      [{ update: 'values', labels: bars, status: 'Closing soon' }, { values: { North: 1, 東京: 2 }, status: 'Closing soon' }],
+      [{ update: 'reset', event: 'sales.update' }, { reset: true }],
+    ];
+    for (const [parameters] of runs) await run(moduleApi('updateLiveChart'), { ...opts, parameters: { channel: chan, ...parameters } });
+    s.seen.forEach((req, i) => {
+      const body = JSON.parse(req.body);
+      assert.equal(body.name, i === 4 ? 'sales.update' : 'chart.update');
+      assert.deepEqual(body.channels, [chan]);
+      const data = Object.fromEntries(Object.entries(JSON.parse(body.data)).filter(([, v]) => v !== null));
+      assert.deepEqual(data, runs[i][1]);
+      assert.equal(req.url.searchParams.get('body_md5'), createHash('md5').update(req.body).digest('hex'));
+      assert.equal(req.url.searchParams.get('auth_signature'), expected('POST', '/apps/3/events', req.url.searchParams, connection.secret));
+    });
+  } finally {
+    s.close();
+  }
+});
+
 test('List occupied channels: optional prefix and info are signed when sent', async () => {
   const s = await capture({ channels: { 'presence-room-1': { user_count: 2 }, 'presence-room-2': { user_count: 1 } } });
   try {

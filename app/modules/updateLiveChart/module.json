@@ -1,0 +1,1 @@
+{ "typeId": 4, "label": "Update a live chart", "description": "Updates a live chart or poll opened through the Hibira MCP server; it redraws at once.", "connection": "hibira" }
