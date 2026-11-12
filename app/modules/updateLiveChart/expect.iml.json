@@ -1,0 +1,44 @@
+[
+  {
+    "name": "channel",
+    "type": "text",
+    "label": "Channel",
+    "required": true,
+    "help": "The private channel the chart listens on, shown when the chart is opened, such as private-chart-3f9a1c2b7d4e."
+  },
+  {
+    "name": "update",
+    "type": "select",
+    "label": "Update",
+    "required": true,
+    "default": "value",
+    "options": [
+      { "label": "Set the number (KPI or progress), or add a point to a line", "value": "value" },
+      { "label": "Add to the number (a negative number subtracts)", "value": "add" },
+      { "label": "Add to bars or funnel steps, such as one vote", "value": "addLabels" },
+      { "label": "Set bars or funnel steps, or one point per line series", "value": "values" },
+      { "label": "Reset the chart", "value": "reset" }
+    ]
+  },
+  {
+    "name": "number",
+    "type": "number",
+    "label": "Number",
+    "help": "The number to set or add. Used by Set the number and Add to the number."
+  },
+  {
+    "name": "labels",
+    "type": "array",
+    "label": "Bars",
+    "help": "Each bar or funnel step and its number. Used by Add to bars and Set bars; a new label is added at the end.",
+    "spec": [
+      { "name": "label", "type": "text", "label": "Label", "required": true },
+      { "name": "value", "type": "number", "label": "Number", "required": true }
+    ]
+  },
+  { "name": "max", "type": "number", "label": "Goal", "help": "The goal of a progress bar, or a fixed top for a line or bar chart. Leave empty to keep it." },
+  { "name": "title", "type": "text", "label": "Title", "help": "Leave empty to keep the chart's title." },
+  { "name": "subtitle", "type": "text", "label": "Subtitle" },
+  { "name": "status", "type": "text", "label": "Status", "help": "A short status line shown on the chart, up to 40 characters." },
+  { "name": "event", "type": "text", "label": "Event name", "default": "chart.update", "help": "Only change this if the chart was opened with another event name." }
+]

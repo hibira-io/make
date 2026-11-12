@@ -24,6 +24,7 @@ const fns = {
   split: (s, sep) => String(s).split(sep),
   sort: (a) => [...a].sort(),
   join: (a, sep) => a.join(sep),
+  toCollection: (a, key, value) => Object.fromEntries((a ?? []).map((x) => [x[key], x[value]])),
   __if: (c, a, b) => (c ? a : b),
 };
 

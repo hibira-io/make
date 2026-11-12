@@ -14,6 +14,7 @@ channel and presence events.
 |---|---|---|
 | Watch webhook events | Instant trigger | channel occupied or vacated, member added or removed, client events |
 | Trigger an event | Action | sends an event to up to 100 channels |
+| Update a live chart | Action | updates a live chart or poll opened through the Hibira MCP server: set or add to a number, add to or set bars, or reset, with an optional goal, title, subtitle and status |
 | Request an approval | Action | asks a person to approve or choose through a hosted answer link, optionally sent by push |
 | Get an approval | Action | status and answer of a request, waiting up to 25 s |
 | Send a push notification | Action | iOS, Android and web, by interest or user ID (Hibira Push connection) |
