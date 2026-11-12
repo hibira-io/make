@@ -31,6 +31,34 @@ For example: a new row in a Google Sheet or a paid Stripe invoice triggers
 `order-updated` on `orders`, and every open dashboard updates at once; a
 member joining `presence-support` posts to Slack.
 
+### Recipe: supervisor approval for database changes
+
+Reads run by themselves; a change waits for a supervisor who sees the exact
+statement and its plan. Make keeps the database connection, so Hibira only
+carries the question and the answer.
+
+1. A trigger brings the statement, such as a webhook from your app with
+   `sql`.
+2. A **Router** with two routes. Route *read* has a filter: `sql` *Matches
+   pattern (case insensitive)* `^\s*(select|with|explain|show)\b` **and**
+   *Does not match pattern (case insensitive)*
+   `\b(insert|update|delete|merge|create|alter|drop|truncate|grant|revoke|copy|call|into|analyze|set|nextval|setval)\b|\bfor\s+(update|share)\b|;\s*\S`.
+   It runs the statement with your database app's query module, on a user
+   that can only read. The other route is the fallback, so anything unsure
+   is a change.
+3. On the change route: run `EXPLAIN {{sql}}` (it does not run the
+   statement) → **Request an approval** with Question `Run this change on
+   the shop database?` and Details holding the statement, the plan and
+   `SHA-256: {{sha256(sql)}}`. Add push user IDs to reach the supervisor's
+   phone, or a channel to show it live in your own app.
+4. **Repeater** + **Get an approval** until Status is not `pending`, then a
+   filter on Status `approved` **and** `sha256(sql)` equal to the
+   fingerprint you sent → run `sql` with the query module. On `rejected`,
+   send `comment` back to the requester.
+
+The same pattern with a web console and a phone approval page is the
+[database changes guide](https://hibira.io/use-cases/database-write-approvals).
+
 ## Install in your Make account
 
 1. In Make, create an API token (Profile > API access) with the scopes
